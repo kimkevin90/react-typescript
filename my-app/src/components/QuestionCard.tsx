@@ -1,10 +1,12 @@
 import React from "react";
 
+import { AnswerObject } from "../App";
+
 type Props = {
   question: string;
   answers: string[];
-  callback: any;
-  userAnswer: any;
+  callback: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  userAnswer: AnswerObject | undefined;
   questionNr: number;
   totalQuestions: number;
 };
@@ -25,9 +27,9 @@ const QuestionCard: React.FC<Props> = ({
       <p dangerouslySetInnerHTML={{ __html: question }}></p>
       <div>
         {answers.map((answer) => (
-          <div>
+          <div key={answer}>
             {/* 특정조건이 충족될때까지 버튼 사용 안됨 */}
-            <button disabled={userAnswer} onClick={callback}>
+            <button disabled={!!userAnswer} value={answer} onClick={callback}>
               <span dangerouslySetInnerHTML={{ __html: answer }} />
             </button>
           </div>
